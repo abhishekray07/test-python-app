@@ -1,6 +1,6 @@
 {
   "id": "/spark-streaming-example",
-  "cmd": "/opt/spark-2.2.0/bin/spark-submit --driver-memory 1g --class com.quora.SparkStreamingExample SparkStreamingExample-1.0.0.jar zk-infra1:2181,zk-infra2:2181,zk-infra3:2181,zk-infra4:2181,zk-infra5:2181 test-streaming-job test_bchheda, 2 /tmp/streaming-test/ --conf spark.ui.port=$PORT0 spark.mesos.driver.webui.url=http://$MARATHON_APP_ID.dwhmesos.quora.net:80/ spark.mesos.executor.memoryOverhead=1024",
+  "cmd": "/opt/spark-2.2.0/bin/spark-submit --driver-memory 1g --class com.quora.SparkStreamingExample SparkStreamingExample-1.0.0.jar zk-infra1:2181,zk-infra2:2181,zk-infra3:2181,zk-infra4:2181,zk-infra5:2181 test-streaming-job test_bchheda, 2 hdfs://spark-cluster3/tmp/streaming-test/ --conf spark.ui.port=$PORT0 spark.mesos.driver.webui.url=http://$MARATHON_APP_ID.dwhmesos.quora.net:80/ spark.mesos.executor.memoryOverhead=1024",
   "cpus": 0.50,
   "mem": 512,
   "acceptedResourceRoles": [
