@@ -5,8 +5,9 @@ pipeline {
     }
 
     stages {
-        stage('Initialize Repo') {
+        stage('Initialize') {
             steps {
+                // do sparse checkout of ans repo
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']],
                           doGenerateSubmoduleConfigurations: false,
                           extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: 'SparkStreamingExample']]]], submoduleCfg: [],
@@ -16,15 +17,18 @@ pipeline {
 
         stage('Build') {
             steps {
+                // maven build
                 sh 'mvn -f SparkStreamingExample/pom.xml clean install'
             }
 
             post {
                 success {
-                    withAWS(region: 'us-east-1') {
-                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/'
-                    }
-                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: 's3a://qdeploy/applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar']], url: 'http://dwhmaster7494979740769402770:8080'
+                    echo ${env.JOB_NAME}
+
+//                    withAWS(region: 'us-east-1') {
+//                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/'
+//                    }
+//                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: 's3a://qdeploy/applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar']], url: 'http://dwhmaster7494979740769402770:8080'
                 }
             }
         }
