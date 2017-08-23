@@ -4,6 +4,10 @@ pipeline {
         maven 'maven'
     }
 
+    // job metadata
+    def jobName = env.JOB_NAME
+    def buildNumer = env.BUILD_NUMBER
+
     stages {
         stage('Initialize') {
             steps {
@@ -18,20 +22,17 @@ pipeline {
         stage('Build') {
             steps {
                 // maven build
-                sh 'printenv'
-//                sh 'mvn -f SparkStreamingExample/pom.xml clean install'
+                sh 'mvn -f SparkStreamingExample/pom.xml clean install'
             }
 
             post {
                 success {
-                    echo env.JOB_NAME
-                    echo env.BUILD_NUMBER
+                    def s3Path = "applications/${jobName}/${buildNumber}/"
+                    withAWS(region: 'us-east-1') {
+                        s3Upload bucket: 'qdeploy', file: "SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar", path: s3Path
+                    }
 
-
-//                    withAWS(region: 'us-east-1') {
-//                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/'
-//                    }
-//                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: 's3a://qdeploy/applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar']], url: 'http://dwhmaster7494979740769402770:8080'
+//                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: "s3a://qdeploy/applications/${jobName}/${buildNumer}/SparkStreamingExample-1.0.0.jar"]], url: 'http://dwhmaster7494979740769402770:8080'
                 }
             }
         }
