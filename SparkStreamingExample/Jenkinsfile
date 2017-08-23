@@ -2,29 +2,28 @@ pipeline {
     agent any
     tools {
         maven 'Maven 3.5.0'
-        jdk 'jdk8'
     }
 
     stages {
-        stage('Initialize') {
+        stage('Initialize Repo') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: 'SparkStreamingExample']]]], submoduleCfg: [],
+                          userRemoteConfigs: [[url: 'https://github.com/abhishekray07/test-python-app.git']]])
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
-            }
-
-            post {
-                success {
-                    echo "Success!"
-                }
-            }
-        }
+//        stage('Build') {
+//            steps {
+//                sh 'mvn -Dmaven.test.failure.ignore=true install'
+//            }
+//
+//            post {
+//                success {
+//                    echo "Success!"
+//                }
+//            }
+//        }
     }
 }
