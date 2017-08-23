@@ -4,8 +4,6 @@ pipeline {
         maven 'maven'
     }
 
-    def
-
     stages {
         stage('Initialize') {
             steps {
