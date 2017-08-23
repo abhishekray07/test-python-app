@@ -23,8 +23,8 @@ pipeline {
 
             post {
                 success {
-                    echo '$JOB_NAME'
-                    echo '$BUILD_NUMBER'
+                    echo $JOB_NAME
+                    echo $BUILD_NUMBER
 //                    sh 'printenv'
 
 //                    withAWS(region: 'us-east-1') {
