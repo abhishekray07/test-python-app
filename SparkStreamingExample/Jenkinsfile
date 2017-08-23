@@ -21,7 +21,9 @@ pipeline {
 
             post {
                 success {
-                    s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${JOB_NAME}/${BUILD_NUMBER}/'
+                    withAWS(region: 'us-east-1') {
+                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${JOB_NAME}/${BUILD_NUMBER}/'
+                    }
                     marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: 's3a://qdeploy/applications/${JOB_NAME}/${BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar']], url: 'http://dwhmaster7494979740769402770:8080'
                 }
             }
