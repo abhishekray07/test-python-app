@@ -37,7 +37,6 @@ pipeline {
     // deploy to marathon if build is successful
     post {
         success {
-            // deploy to marathon
             marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: "s3a://qdeploy/applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar"]], url: "http://dwhmaster7494979740769402770:8080"
         }
     }
