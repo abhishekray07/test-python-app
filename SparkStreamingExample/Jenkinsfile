@@ -14,16 +14,16 @@ pipeline {
             }
         }
 
-//        stage('Build') {
-//            steps {
-//                sh 'mvn -Dmaven.test.failure.ignore=true install'
-//            }
-//
-//            post {
-//                success {
-//                    echo "Success!"
-//                }
-//            }
-//        }
+        stage('Build') {
+            steps {
+                sh 'mvn -f SparkStreamingExample/pom.xml -Dmaven.test.failure.ignore=true install'
+            }
+
+            post {
+                success {
+                    echo "Success!"
+                }
+            }
+        }
     }
 }
