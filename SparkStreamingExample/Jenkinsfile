@@ -4,6 +4,8 @@ pipeline {
         maven 'maven'
     }
 
+    def
+
     stages {
         stage('Initialize') {
             steps {
@@ -23,7 +25,8 @@ pipeline {
 
             post {
                 success {
-                    echo ${env.JOB_NAME}
+//                    echo '$JOB_NAME'
+                    sh 'printenv'
 
 //                    withAWS(region: 'us-east-1') {
 //                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/'
