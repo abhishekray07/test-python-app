@@ -18,14 +18,15 @@ pipeline {
         stage('Build') {
             steps {
                 // maven build
-                sh 'mvn -f SparkStreamingExample/pom.xml clean install'
+                sh 'printenv'
+//                sh 'mvn -f SparkStreamingExample/pom.xml clean install'
             }
 
             post {
                 success {
-                    echo $JOB_NAME
-                    echo $BUILD_NUMBER
-//                    sh 'printenv'
+                    echo ${env.JOB_NAME}
+                    echo ${env.BUILD_NUMBER}
+
 
 //                    withAWS(region: 'us-east-1') {
 //                        s3Upload bucket: 'qdeploy', file: 'SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar', path: 'applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/'
