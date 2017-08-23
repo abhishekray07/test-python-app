@@ -24,8 +24,8 @@ pipeline {
 
             post {
                 success {
-                    echo ${env.JOB_NAME}
-                    echo ${env.BUILD_NUMBER}
+                    echo env.JOB_NAME
+                    echo env.BUILD_NUMBER
 
 
 //                    withAWS(region: 'us-east-1') {
