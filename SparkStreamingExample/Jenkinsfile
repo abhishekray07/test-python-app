@@ -24,10 +24,10 @@ pipeline {
             post {
                 success {
                     withAWS(region: 'us-east-1') {
-                        s3Upload bucket: 'qdeploy', file: "SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar", path: "applications/${env.JOB_NAME}/${env.JOB_NAME}/"
+                        s3Upload bucket: 'qdeploy', file: "SparkStreamingExample/target/SparkStreamingExample-1.0.0.jar", path: "applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
                     }
 
-//                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: "s3a://qdeploy/applications/${jobName}/${buildNumer}/SparkStreamingExample-1.0.0.jar"]], url: 'http://dwhmaster7494979740769402770:8080'
+                    marathon credentialsId: '', docker: '', filename: 'SparkStreamingExample/marathon.json', id: '', uris: [[uri: "s3a://qdeploy/applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/SparkStreamingExample-1.0.0.jar"]], url: 'http://dwhmaster7494979740769402770:8080'
                 }
             }
         }
