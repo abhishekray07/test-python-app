@@ -29,7 +29,7 @@ def deployToMarathon(String filePath, String uri) {
     def marathonUrl = 'http://dwhmaster7494979740769402770:8080'
 
     stage('Deploying to Marathon') {
-        marathon credentialsId: '', docker: '', filename: "${env.APPLICATION_PATH}/marathon.json", id: '', uris: [[uri: "${uri}"]], url: "${marathonUrl}"
+        marathon credentialsId: '', docker: '', filename: "${filePath}", id: '', uris: [[uri: "${uri}"]], url: "${marathonUrl}"
     }
 }
 
