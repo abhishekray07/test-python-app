@@ -8,13 +8,11 @@ def S3_BUILD_BUCKET = "qdeploy"
 
 def sparseGitCheckout(String gitRepo, String checkoutPath) {
     stage('Setup Git Repo') {
-        steps {
-            // do sparse checkout of ans repo
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-                      doGenerateSubmoduleConfigurations: false,
-                      extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: "${checkoutPath}"]]]], submoduleCfg: [],
-                      userRemoteConfigs: [[url: "${gitRepo}"]]])
-        }
+        // do sparse checkout of ans repo
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+                  doGenerateSubmoduleConfigurations: false,
+                  extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: "${checkoutPath}"]]]], submoduleCfg: [],
+                  userRemoteConfigs: [[url: "${gitRepo}"]]])
     }
 }
 
@@ -32,10 +30,7 @@ def pushToS3(String filePath, String destFilename) {
 
 def buildMavenProject(String applicationPath) {
     stage('Build') {
-        steps {
-            // maven build
-            sh "mvn -f ${applicationPath}/pom.xml clean install"
-        }
+        sh "mvn -f ${applicationPath}/pom.xml clean install"
     }
 }
 
