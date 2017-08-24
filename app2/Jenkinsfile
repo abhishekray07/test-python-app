@@ -1,0 +1,9 @@
+#!groovy
+
+def run() {
+    stage('Build') {
+        echo 'Running stage for app2'
+    }
+}
+
+return this
