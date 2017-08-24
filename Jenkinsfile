@@ -1,23 +1,9 @@
-pipeline {
-    agent any
+#!groovy
 
-    stages {
-        stage('Build') {
-            steps {
-                echo "Building.. ${env.BUILD_ID} on ${env.JENKINS_URL}"
-            }
-        }
+// This shows a simple example of how to archive the build output artifacts.
+node {
+    stage "Create build output"
 
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying..'
-            }
-        }
-    }
+    // Make the output directory.
+    print "Build output stage"
 }
