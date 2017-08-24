@@ -8,7 +8,7 @@ def runFile() {
     def targetJar = "SparkStreamingExample-1.0.0.jar"
 
     // build maven project
-    common.buildMavenProject(applicationName})
+    common.buildMavenProject(applicationName)
 
     // push to S3
     common.pushToS3(${applicationName}/target/${targetJar}", "${targetJar}")
