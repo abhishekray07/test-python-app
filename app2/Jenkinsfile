@@ -1,9 +1,0 @@
-#!groovy
-
-def runStep() {
-    stage('Build') {
-        echo 'Running stage for app2'
-    }
-}
-
-return this

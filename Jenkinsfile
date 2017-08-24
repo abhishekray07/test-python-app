@@ -1,14 +1,19 @@
 #!groovy
 
-def list = ['app1/Jenkinsfile', 'app2/Jenkinsfile']
+def projects = ['app1/Jenkinsfile']
 
 // This shows a simple example of how to archive the build output artifacts.
 node {
+
+    // checkout git repo
     git url: 'https://github.com/abhishekray07/test-python-app.git/'
+
+    // run the steps for each of the sub-projects
     def rootDir = pwd()
 
-    for (String item : list) {
-        def jenkinsfile = load "${rootDir}/${item}"
-        jenkinsfile.runStep()
+    for (int i=0; i < projects.length; i++) {
+        def projectFile = load "${rootDir}/{$project[i]}"
+        projectFile.runFile()
     }
+
 }

@@ -1,9 +1,11 @@
 #!groovy
 
-def runStep() {
+def runFile() {
     def rootDir = pwd()
+    def applicationName = "app1"
     def common = load "${rootDir}/common.Groovy"
-    common.pushToS3()
+
+    common.deployToMarathon("{$rootDir}/{$applicationName/marathon.json", "")
 }
 
 return this
