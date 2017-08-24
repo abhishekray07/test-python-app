@@ -11,7 +11,7 @@ def runFile() {
     common.buildMavenProject(applicationName)
 
     // push to S3
-    common.pushToS3(${applicationName}/target/${targetJar}", targetJar)
+    common.pushToS3("${applicationName}/target/${targetJar}", targetJar)
 
     // deploy to marathon
     def marathonURI = common.getMarathonURI(targetJar)
