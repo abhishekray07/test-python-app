@@ -11,7 +11,7 @@ node {
     // run the steps for each of the sub-projects
     def rootDir = pwd()
 
-    for (int i=0; i < projects.length; i++) {
+    for (int i=0; i < projects.size(); i++) {
         def projectFile = load "${rootDir}/{$project[i]}"
         projectFile.runFile()
     }
