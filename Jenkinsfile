@@ -1,6 +1,6 @@
 #!groovy
 
-def projects = ['app1/Jenkinsfile']
+def projects = ['app1', 'SparkStreamingExample']
 
 // This shows a simple example of how to archive the build output artifacts.
 node {
@@ -12,7 +12,7 @@ node {
     def rootDir = pwd()
 
     for (int i=0; i < projects.size(); i++) {
-        def projectFile = load "${rootDir}/${projects[i]}"
+        def projectFile = load "${rootDir}/${projects[i]}/Jenkinsfile"
         projectFile.runFile()
     }
 

@@ -1,46 +1,21 @@
-pipeline {
-    agent any
-    tools {
-        maven 'maven'
-    }
+#!groovy
 
-    environment {
-        GIT_REPO           = 'https://github.com/abhishekray07/test-python-app.git'
-        APPLICATION_PATH   = 'SparkStreamingExample'
-        TARGET_JAR         = 'SparkStreamingExample-1.0.0.jar'
-        S3_BUCKET          = 'qdeploy'
-        MARATHON_URL       = 'http://dwhmaster7494979740769402770:8080'
-    }
+def runFile() {
+    def rootDir = pwd()
+    def common = load "${rootDir}/common.Groovy"
 
-    stages {
-        stage('Setup') {
-            steps {
-                // do sparse checkout of ans repo
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: "${env.APPLICATION_PATH}"]]]], submoduleCfg: [],
-                          userRemoteConfigs: [[url: "${env.GIT_REPO}"]]])
-            }
-        }
+    def applicationName = "SparkStreamingExample"
+    def targetJar = "SparkStreamingExample-1.0.0.jar"
 
-        stage('Build') {
-            steps {
-                // maven build
-                sh "mvn -f ${env.APPLICATION_PATH}/pom.xml clean install"
-            }
-        }
+    // build maven project
+    common.buildMavenProject(applicationName})
 
-        stage('Deploy') {
-            steps {
-                // push to s3
-                withAWS(region: 'us-east-1') {
-                    s3Upload bucket: "${env.S3_BUCKET}", file: "${env.APPLICATION_PATH}/target/${env.TARGET_JAR}", path: "applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/${env.TARGET_JAR}"
-                }
+    // push to S3
+    common.pushToS3(${applicationName}/target/${targetJar}", "${targetJar}")
 
-                // deploy to marathon
-                marathon credentialsId: '', docker: '', filename: "${env.APPLICATION_PATH}/marathon.json", id: '', uris: [[uri: "s3a://${env.S3_BUCKET}/${env.JOB_NAME}/${env.BUILD_NUMBER}/${env.TARGET_JAR}"]], url: "${env.MARATHON_URL}"
-            }
-        }
-
-    }
+    // deploy to marathon
+    def marathonURI = common.getMarathonURI(targetJar)
+    common.deployToMarathon("${rootDir}/${applicationName}/marathon.json", marathonURI)
 }
+
+return this
