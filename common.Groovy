@@ -3,7 +3,7 @@
 // We define commonly used steps in this file which can be re-used
 
 // bucket where we store all builds on S3
-def S3_BUILD_BUCKET = "qdeploy"
+S3_BUILD_BUCKET = "qdeploy"
 
 
 def sparseGitCheckout(String gitRepo, String checkoutPath) {
