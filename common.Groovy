@@ -22,7 +22,7 @@ def pushToS3(String filePath, String destFilename) {
     stage('Deploying to S3') {
         // push to s3
         withAWS(region: 'us-east-1') {
-            s3Upload bucket: "${S3_BUILD_BUCKET}", file: "${filePath}", path: "applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/${destPath}"
+            s3Upload bucket: "${S3_BUILD_BUCKET}", file: "${filePath}", path: "applications/${env.JOB_NAME}/${env.BUILD_NUMBER}/${destFilename}"
         }
     }
 }
