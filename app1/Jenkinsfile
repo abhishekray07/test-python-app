@@ -5,7 +5,7 @@ def runFile() {
     def applicationName = "app1"
     def common = load "${rootDir}/common.Groovy"
 
-    common.deployToMarathon("{$rootDir}/{$applicationName/marathon.json", "")
+    common.deployToMarathon("${rootDir}/${applicationName}/marathon.json", "")
 }
 
 return this
