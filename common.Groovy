@@ -1,6 +1,6 @@
 #!groovy
 
-# We define commonly used steps in this file which can be re-used
+// We define commonly used steps in this file which can be re-used
 
 def sparseGitCheckout(String gitRepo, String checkoutPath) {
     stage('Setup Git Repo') {
