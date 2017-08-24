@@ -4,6 +4,6 @@
 node {
     git url: 'https://github.com/abhishekray07/test-python-app.git/'
     def rootDir = pwd()
-    def example = load "${rootDir}/example.Groovy"
+    def example = readFile "example.Groovy"
     example.exampleMethod()
 }
