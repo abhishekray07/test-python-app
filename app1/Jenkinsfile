@@ -1,9 +1,9 @@
 #!groovy
 
 def runStep() {
-    stage('Build') {
-        echo 'Running stage for app1'
-    }
+    def rootDir = pwd()
+    def common = load "${rootDir}/common.Groovy"
+    common.pushToS3()
 }
 
 return this
