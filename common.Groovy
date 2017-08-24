@@ -11,6 +11,7 @@ def sparseGitCheckout(String gitRepo, String checkoutPath) {
                       extensions: [[$class: 'SparseCheckoutPaths',sparseCheckoutPaths: [[path: "${checkoutPath}"]]]], submoduleCfg: [],
                       userRemoteConfigs: [[url: "${gitRepo}"]]])
         }
+    }
 }
 
 
