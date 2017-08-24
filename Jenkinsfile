@@ -12,7 +12,7 @@ node {
     def rootDir = pwd()
 
     for (int i=0; i < projects.size(); i++) {
-        def projectFile = load "${rootDir}/{$project[i]}"
+        def projectFile = load "${rootDir}/{$projects[i]}"
         projectFile.runFile()
     }
 
