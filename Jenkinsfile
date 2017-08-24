@@ -1,6 +1,6 @@
 #!groovy
 
-def list = ['app1/Jenkinsfile']
+def list = ['app1/Jenkinsfile', 'app2/Jenkinsfile']
 
 // This shows a simple example of how to archive the build output artifacts.
 node {
@@ -9,6 +9,6 @@ node {
 
     for (String item : list) {
         def jenkinsfile = load "${rootDir}/${item}"
-        jenkinsfile.run()
+        jenkinsfile.runStep()
     }
 }

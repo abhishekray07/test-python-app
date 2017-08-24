@@ -1,6 +1,6 @@
 #!groovy
 
-def run() {
+def runStep() {
     stage('Build') {
         echo 'Running stage for app1'
     }
