@@ -1,19 +1,14 @@
-#!groovy
-
-def projects = ['app1', 'SparkStreamingExample']
-
-// This shows a simple example of how to archive the build output artifacts.
-node {
-
-    // checkout git repo
-    git url: 'https://github.com/abhishekray07/test-python-app.git/'
-
-    // run the steps for each of the sub-projects
-    def rootDir = pwd()
-
-    for (int i=0; i < projects.size(); i++) {
-        def projectFile = load "${rootDir}/${projects[i]}/Jenkinsfile"
-        projectFile.runFile()
+pipeline {
+    agent any
+    stages {
+         stage('Build & Deploy') {
+             steps {
+                sh '''#!/bin/bash
+                DOCKER_LOGIN=`aws ecr get-login --no-include-email --region us-east-1`
+                ${DOCKER_LOGIN}
+				echo "Docker Login"
+                '''
+             }
+         }
     }
-
 }
